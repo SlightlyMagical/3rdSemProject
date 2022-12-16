@@ -27,9 +27,24 @@ namespace Infrastructure
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
-
             modelBuilder.Entity<User>()
                 .HasKey(u => u.Id);
+
+            //Booking
+            modelBuilder.Entity<Booking>()
+                .Property(b => b.Id)
+                .ValueGeneratedOnAdd();
+
+            //Relations
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Client)
+                .WithMany(c => c.Bookings)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Coach)
+                .WithMany(c => c.Bookings)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
 
         public DbSet<User> UserTable { get; set; }
