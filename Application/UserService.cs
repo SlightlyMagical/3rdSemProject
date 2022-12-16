@@ -14,7 +14,12 @@ namespace Application
         }
         public List<Coach> GetAllCoaches()
         {
-            return _userRepository.ReadAllCoaches();
+            List<Coach> coaches = _userRepository.ReadAllCoaches();
+
+            if (coaches == null || coaches.Count == 0)
+                throw new ArgumentException("No coaches found");
+
+            return coaches; 
         }
     }
 }
