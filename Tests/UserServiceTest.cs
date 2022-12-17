@@ -7,6 +7,18 @@ namespace Tests
 {
     public class UserServiceTest
     {
+        private Mock<IUserRepository> _userRepositoryMock;
+        private IUserRepository _repository;
+        private IUserService _userService;
+
+        public UserServiceTest()
+        {
+            _userRepositoryMock = new Mock<IUserRepository>();
+            _repository = _userRepositoryMock.Object;
+
+            _userService = new UserService(_repository);
+        }
+
         //Test 1.1
         [Fact]
         public void CreateUserServiceValidRepo() 
@@ -14,11 +26,8 @@ namespace Tests
             //Arrange
             IUserService userService = null;
 
-            Mock<IUserRepository> mockRepository = new Mock<IUserRepository>();
-            IUserRepository repository = mockRepository.Object;
-
             //Act
-            userService = new UserService(repository);
+            userService = new UserService(_repository);
 
             //Assert
             Assert.True(userService is UserService);
@@ -45,18 +54,14 @@ namespace Tests
             //Arrange
             List<Coach> expected = new List<Coach>() {new Coach()};
 
-            Mock<IUserRepository> mockRepository = new Mock<IUserRepository>();
-            IUserRepository repository = mockRepository.Object;
-            mockRepository.Setup(x => x.ReadAllCoaches()).Returns(expected);
-
-            IUserService userService = new UserService(repository);
+            _userRepositoryMock.Setup(x => x.ReadAllCoaches()).Returns(expected);
 
             //Act
-            var result = userService.GetAllCoaches();
+            var result = _userService.GetAllCoaches();
 
             //Assert
             Assert.Equal(expected, result);
-            mockRepository.Verify(x => x.ReadAllCoaches(), Times.Once);
+            _userRepositoryMock.Verify(x => x.ReadAllCoaches(), Times.Once);
         }
 
         //Test 2.2
@@ -64,19 +69,24 @@ namespace Tests
         public void GetAllCoachesInvalid()
         {
             //Arrange
-            List<Coach> expected = new List<Coach>() {};
+            List<Coach> emptyCoachList = new List<Coach>() {};
 
-            Mock<IUserRepository> mockRepository = new Mock<IUserRepository>();
-            IUserRepository repository = mockRepository.Object;
-            mockRepository.Setup(x => x.ReadAllCoaches()).Returns(expected);
-
-            IUserService userService = new UserService(repository);
+            _userRepositoryMock.Setup(x => x.ReadAllCoaches()).Returns(emptyCoachList);
 
             //Act + Assert
-            var ex = Assert.Throws<ArgumentException>(() => userService.GetAllCoaches());
+            var ex = Assert.Throws<ArgumentException>(() => _userService.GetAllCoaches());
 
             Assert.Equal("No coaches found", ex.Message);
-            mockRepository.Verify(x => x.ReadAllCoaches(), Times.Once);
+            _userRepositoryMock.Verify(x => x.ReadAllCoaches(), Times.Once);
+        }
+
+        //Test 3.1 + 3.2
+        [Theory]
+        [InlineData("Peter", "email@email.com", "MyPassword123", "Client")]
+        [InlineData("Peter", "email@email.com", "MyPassword123", "Coach")]
+        public void CreateNewUserValid(string name, string email, string password, string usertype)
+        {
+
         }
     }
 }
