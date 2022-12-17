@@ -14,6 +14,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,9 @@ const routes: Routes = [
   },
   {
     path: 'signup', component: SignUpComponent
+  },
+  {
+    path: 'login', component: LoginComponent
   }
 ]
 
@@ -28,7 +32,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     CoachListComponent,
-    SignUpComponent
+    SignUpComponent,
+    LoginComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

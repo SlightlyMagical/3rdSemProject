@@ -18,7 +18,12 @@ export class HttpService {
   }
 
   async createNewUser(dto: {name: string; email: string; password: string; usertype: string}){
-    const httpResponse = await customAxios.post("/auth", dto);
+    const httpResponse = await customAxios.post("/auth/register", dto);
+    return httpResponse.data;
+  }
+
+  async login(dto: { password: string; email: string }) {
+    const httpResponse = await customAxios.post("/auth/login", dto);
     return httpResponse.data;
   }
 }
