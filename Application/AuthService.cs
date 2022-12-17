@@ -30,6 +30,15 @@ namespace Application
             _postUserValidator = postUserValidator;
         }
 
+        public User Login(LoginDTO dto)
+        {
+            User user = _userRepository.ReadUserByEmail(dto.Email);
+            var verfication = user.Password.VerifyHashedPasswordBCrypt(dto.Password);
+            if (!verfication)
+                throw new ArgumentException("Incorrect password");
+            return user;
+        }
+
         public User RegisterUser(PostUserDTO dto)
         {
             var validation = _postUserValidator.Validate(dto);

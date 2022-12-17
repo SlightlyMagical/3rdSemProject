@@ -19,6 +19,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Route("register")]
         public ActionResult<User> RegisterUser(PostUserDTO dto)
         {
             try
@@ -33,6 +34,20 @@ namespace API.Controllers
             catch (System.Exception e)
             {
                 return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public ActionResult Login(LoginDTO dto)
+        {
+            try
+            {
+                return Ok(_authService.Login(dto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
         }
     }

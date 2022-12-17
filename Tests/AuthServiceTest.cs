@@ -1,5 +1,6 @@
 ﻿using Application;
 using Application.DTOs;
+using Application.Helpers;
 using Application.Interfaces;
 using Application.Validators;
 using AutoMapper;
@@ -82,6 +83,39 @@ namespace Tests
             //Act + Assert
             Assert.Throws<ValidationException>(() => _authService.RegisterUser(dto));
             _userRepositoryMock.Verify(x => x.AddNewUser(It.IsAny<User>()), Times.Never);
+        }
+
+        //Test 4.1
+        [Fact]
+        public void LoginValid() 
+        {
+            //Arrange
+            LoginDTO dto = new LoginDTO() { Email = "email@email.com", Password = "MyPassword123" };
+            User expected = new User() { Email = "email@email.com", Password = dto.Password.HashPasswordBCrypt() };
+
+            _userRepositoryMock.Setup(x => x.ReadUserByEmail(dto.Email)).Returns(expected);
+
+            //Act
+            var result = _authService.Login(dto);
+
+            //Assert
+            Assert.Equal(expected, result);
+            _userRepositoryMock.Verify(x => x.ReadUserByEmail(dto.Email), Times.Once);
+        }
+
+        //Test 4.2
+        [Fact]
+        public void LoginInvalid()
+        {
+            //Arrange
+            LoginDTO dto = new LoginDTO() { Email = "email@email.", Password = "MyPassword" };
+            User userWithEmail = new User() { Email = "email@email.com", Password = PasswordHash.HashPasswordBCrypt("MyPassword123") };
+
+            _userRepositoryMock.Setup(x => x.ReadUserByEmail(dto.Email)).Returns(userWithEmail);
+
+            //Act + Assert
+            Assert.Throws<ArgumentException>(() => _authService.Login(dto));
+            _userRepositoryMock.Verify(x => x.ReadUserByEmail(dto.Email), Times.Once);
         }
     }
 }
