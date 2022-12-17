@@ -1,0 +1,13 @@
+.outer-container{
+  margin: 100px;
+  text-align: center;
+}
+.mat-form-field {
+  font-size: medium;
+  min-width: 300px;
+}
+.mat-button-toggle-group{
+  margin: 50px;
+  font-size: x-large;
+}
+

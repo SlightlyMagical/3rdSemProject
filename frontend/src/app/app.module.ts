@@ -10,17 +10,25 @@ import {MatButtonModule} from "@angular/material/button";
 import { CoachListComponent } from './coach-list/coach-list.component';
 import {MatCardModule} from "@angular/material/card";
 import {RouterModule, RouterOutlet, Routes} from "@angular/router";
+import { SignUpComponent } from './sign-up/sign-up.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
 
 const routes: Routes = [
   {
     path: '', component: CoachListComponent
+  },
+  {
+    path: 'signup', component: SignUpComponent
   }
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    CoachListComponent
+    CoachListComponent,
+    SignUpComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -31,7 +39,10 @@ const routes: Routes = [
     MatButtonToggleModule,
     MatButtonModule,
     MatCardModule,
-    RouterOutlet
+    RouterOutlet,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

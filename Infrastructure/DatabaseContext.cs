@@ -22,9 +22,6 @@ namespace Infrastructure
                 .Property(u => u.Id)
                 .ValueGeneratedOnAdd();
             modelBuilder.Entity<User>()
-                .HasIndex(u => u.Name)
-                .IsUnique();
-            modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
             modelBuilder.Entity<User>()

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../../services/http.service";
 
 @Component({
@@ -16,8 +16,7 @@ export class CoachListComponent implements OnInit {
   }
 
   async getCoaches(){
-    const coaches = await this.http.getCoaches();
-    this.coaches = coaches;
+    this.coaches = await this.http.getCoaches();
   }
 
 }
