@@ -50,5 +50,6 @@ namespace Infrastructure
         public DbSet<User> UserTable { get; set; }
         public DbSet<Coach> CoachTable { get; set; }
         public DbSet<Client> ClientTable { get; set; }
+        public DbSet<Booking> BookingTable { get; set; }
     }
 }
