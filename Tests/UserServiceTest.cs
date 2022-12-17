@@ -13,15 +13,13 @@ namespace Tests
         private Mock<IUserRepository> _userRepositoryMock;
         private IUserRepository _repository;
         private IUserService _userService;
-        private Mock<IMapper> _mockMapper;
 
         public UserServiceTest()
         {
             _userRepositoryMock = new Mock<IUserRepository>();
             _repository = _userRepositoryMock.Object;
-            _mockMapper = new Mock<IMapper>();
 
-            _userService = new UserService(_repository, _mockMapper.Object);
+            _userService = new UserService(_repository);
             
         }
 
@@ -33,7 +31,7 @@ namespace Tests
             IUserService userService = null;
 
             //Act
-            userService = new UserService(_repository, _mockMapper.Object);
+            userService = new UserService(_repository);
 
             //Assert
             Assert.True(userService is UserService);
@@ -47,7 +45,7 @@ namespace Tests
             IUserService userService = null;
 
             //Act + Assert
-            var ex = Assert.Throws<ArgumentException>(() => userService = new UserService(null, _mockMapper.Object));
+            var ex = Assert.Throws<ArgumentException>(() => userService = new UserService(null));
 
             Assert.Equal("Missing repository", ex.Message);
             Assert.Null(userService);

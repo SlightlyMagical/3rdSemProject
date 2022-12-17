@@ -16,14 +16,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
-
-
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite(
     "Data source=db.db"
     ));
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddCors();
 

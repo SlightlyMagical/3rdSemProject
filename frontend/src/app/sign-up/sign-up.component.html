@@ -25,7 +25,8 @@
   <button
     [disabled]="usertype== '' || name=='' || email=='' || password==''"
     mat-raised-button
-    color="primary">
+    color="primary"
+    (click)="signup()">
     Sign up
   </button>
 </div>

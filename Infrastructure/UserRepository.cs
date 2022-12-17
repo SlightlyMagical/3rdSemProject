@@ -17,7 +17,7 @@ namespace Infrastructure
         {
             try
             {
-                _context.UserTable.FirstOrDefault(u => u.Email == user.Email);
+                ReadUserByEmail(user.Email);
                 throw new Exception("This email is already in use");
             }
             catch (KeyNotFoundException)
@@ -31,6 +31,11 @@ namespace Infrastructure
         public List<Coach> ReadAllCoaches()
         {
             return _context.CoachTable.ToList();
+        }
+
+        public User ReadUserByEmail(string email)
+        {
+            return _context.UserTable.FirstOrDefault(u => u.Email == email) ?? throw new KeyNotFoundException("There was no user with email " + email);
         }
     }
 }

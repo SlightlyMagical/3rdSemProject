@@ -25,6 +25,6 @@ export class SignUpComponent implements OnInit {
       password: this.password,
       usertype: this.usertype
     }
-    await this.http.createNewUser(dto);
+    const result = await this.http.createNewUser(dto);
   }
 }

@@ -10,15 +10,13 @@ namespace Application
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IMapper mapper) 
+        public UserService(IUserRepository userRepository) 
         {
             if (userRepository == null)
                 throw new ArgumentException("Missing repository");
 
             _userRepository = userRepository; 
-            _mapper = mapper;
         }
 
 

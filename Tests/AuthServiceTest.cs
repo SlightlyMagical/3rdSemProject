@@ -81,7 +81,7 @@ namespace Tests
 
             //Act + Assert
             Assert.Throws<ValidationException>(() => _authService.RegisterUser(dto));
-            _userRepositoryMock.Verify(x => x.AddNewUser(invalidUser), Times.Never);
+            _userRepositoryMock.Verify(x => x.AddNewUser(It.IsAny<User>()), Times.Never);
         }
     }
 }
