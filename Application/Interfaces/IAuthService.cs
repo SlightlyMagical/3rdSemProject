@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IUserRepository
+    public interface IAuthService
     {
-        User AddNewUser(User user);
-        List<Coach> ReadAllCoaches();
+        User RegisterUser(PostUserDTO dto);
     }
 }

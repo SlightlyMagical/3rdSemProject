@@ -1,7 +1,10 @@
 using Application;
 using Application.Interfaces;
+using Application.Validators;
 using Domain;
 using Moq;
+using AutoMapper;
+using Application.DTOs;
 
 namespace Tests
 {
@@ -10,13 +13,16 @@ namespace Tests
         private Mock<IUserRepository> _userRepositoryMock;
         private IUserRepository _repository;
         private IUserService _userService;
+        private Mock<IMapper> _mockMapper;
 
         public UserServiceTest()
         {
             _userRepositoryMock = new Mock<IUserRepository>();
             _repository = _userRepositoryMock.Object;
+            _mockMapper = new Mock<IMapper>();
 
-            _userService = new UserService(_repository);
+            _userService = new UserService(_repository, _mockMapper.Object);
+            
         }
 
         //Test 1.1
@@ -27,7 +33,7 @@ namespace Tests
             IUserService userService = null;
 
             //Act
-            userService = new UserService(_repository);
+            userService = new UserService(_repository, _mockMapper.Object);
 
             //Assert
             Assert.True(userService is UserService);
@@ -41,7 +47,7 @@ namespace Tests
             IUserService userService = null;
 
             //Act + Assert
-            var ex = Assert.Throws<ArgumentException>(() => userService = new UserService(null));
+            var ex = Assert.Throws<ArgumentException>(() => userService = new UserService(null, _mockMapper.Object));
 
             Assert.Equal("Missing repository", ex.Message);
             Assert.Null(userService);
@@ -80,13 +86,5 @@ namespace Tests
             _userRepositoryMock.Verify(x => x.ReadAllCoaches(), Times.Once);
         }
 
-        //Test 3.1 + 3.2
-        [Theory]
-        [InlineData("Peter", "email@email.com", "MyPassword123", "Client")]
-        [InlineData("Peter", "email@email.com", "MyPassword123", "Coach")]
-        public void CreateNewUserValid(string name, string email, string password, string usertype)
-        {
-
-        }
     }
 }
