@@ -29,4 +29,8 @@ export class HttpService {
     const token = await customAxios.post("/auth/login", dto);
     return token.data;
   }
+
+  async updateWorkingHours(dto: {startTime: string; endTime: string}) {
+    await customAxios.put('/managebooking/coach', dto);
+  }
 }

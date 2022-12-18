@@ -1,1 +1,21 @@
-<p>coach-bookings works!</p>
+<div style="margin: 50px">
+  <mat-card>
+    <h1>Your working hours</h1>
+    <mat-form-field style="margin-right: 100px">
+      <input matInput type="time" placeholder="Start time" [value]="startTime">
+    </mat-form-field>
+    <mat-form-field style="margin-right: 100px">
+      <input matInput type="time" placeholder="End time" [value]="endTime">
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="updateWorkingHours()">
+      Update working hours
+    </button>
+  </mat-card>
+  <mat-card style="margin-top: 30px" *ngFor="let b of bookings">
+    <mat-card-title>{{b.date}}</mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+  </mat-card>
+</div>
