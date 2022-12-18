@@ -20,20 +20,19 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("register")]
-        public ActionResult<User> RegisterUser(PostUserDTO dto)
+        public ActionResult RegisterUser(PostUserDTO dto)
         {
             try
             {
-                var result = _authService.RegisterUser(dto);
-                return Created("", result);
+                return Ok(_authService.RegisterUser(dto));
             }
             catch (ValidationException v)
             {
                 return BadRequest(v.Message);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                return StatusCode(500, e.Message);
+                return BadRequest(e.Message);
             }
         }
 

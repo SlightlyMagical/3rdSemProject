@@ -42,21 +42,22 @@ namespace Tests
             switch (usertype)
             {
                 case "Client":
-                    validUser = new Client() { Name = name, Email = email, Password = password };
+                    validUser = new Client() { Name = name, Email = email, Password = password, Usertype = usertype };
                     break;
 
                 case "Coach":
-                    validUser = new Coach() { Name = name, Email = email, Password = password };
+                    validUser = new Coach() { Name = name, Email = email, Password = password, Usertype = usertype };
                     break;
             }
 
             _userRepositoryMock.Setup(x => x.AddNewUser(It.IsAny<User>())).Returns(validUser);
 
             //Act
-            User result = _authService.RegisterUser(dto);
+            string result = _authService.RegisterUser(dto);
+            string expected = _authService.GenerateToken(validUser);
 
             //Assert
-            Assert.Equal(validUser, result);
+            Assert.Equal(expected, result);
             _userRepositoryMock.Verify(x => x.AddNewUser(It.IsAny<User>()), Times.Once);
         }
 
@@ -75,7 +76,7 @@ namespace Tests
         {
             //Arrange
             PostUserDTO dto = new PostUserDTO() { Name = name, Email = email, Password = password, Usertype = usertype };
-            User invalidUser = new User() { Name = name, Email = email, Password = password };
+            User invalidUser = new User() { Name = name, Email = email, Password = password, Usertype = usertype };
 
             _userRepositoryMock.Setup(x => x.AddNewUser(invalidUser)).Returns(invalidUser);
 
@@ -91,12 +92,13 @@ namespace Tests
         {
             //Arrange
             LoginDTO dto = new LoginDTO() { Email = "email@email.com", Password = "MyPassword123" };
-            User expected = new User() { Email = "email@email.com", Password = dto.Password.HashPasswordBCrypt() };
+            User validUser = new User() { Email = "email@email.com", Password = dto.Password.HashPasswordBCrypt(), Usertype = "Client" };
 
-            _userRepositoryMock.Setup(x => x.ReadUserByEmail(dto.Email)).Returns(expected);
+            _userRepositoryMock.Setup(x => x.ReadUserByEmail(dto.Email)).Returns(validUser);
 
             //Act
             var result = _authService.Login(dto);
+            string expected = _authService.GenerateToken(validUser);
 
             //Assert
             Assert.Equal(expected, result);
@@ -109,7 +111,7 @@ namespace Tests
         {
             //Arrange
             LoginDTO dto = new LoginDTO() { Email = "email@email.", Password = "MyPassword" };
-            User userWithEmail = new User() { Email = "email@email.com", Password = PasswordHash.HashPasswordBCrypt("MyPassword123") };
+            User userWithEmail = new User() { Email = "email@email.com", Password = PasswordHash.HashPasswordBCrypt("MyPassword123"), Usertype = "Client" };
 
             _userRepositoryMock.Setup(x => x.ReadUserByEmail(dto.Email)).Returns(userWithEmail);
 
