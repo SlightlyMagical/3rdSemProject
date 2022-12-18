@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password
     }
-    const result = await this.http.login(dto);
+    const token = await this.http.login(dto);
+    localStorage.setItem('token', token);
   }
 }
