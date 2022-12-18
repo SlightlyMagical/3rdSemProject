@@ -1,5 +1,4 @@
 ﻿using Application.DTOs;
-using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IUserService
+    public interface IBookingService
     {
-        List<Coach> GetAllCoaches();
-        bool UpdateWorkingHours(WorkingHoursDTO dto);
     }
 }

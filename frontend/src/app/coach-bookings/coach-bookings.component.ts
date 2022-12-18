@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from "../../services/http.service";
-import * as http from "http";
 
 @Component({
   selector: 'app-coach-bookings',
@@ -18,10 +17,7 @@ export class CoachBookingsComponent implements OnInit {
   }
 
   async updateWorkingHours() {
-    let dto = {
-      startTime: this.startTime,
-      endTime: this.endTime
-    }
-    await this.http.updateWorkingHours(dto);
+    console.log(this.startTime)
+    await this.http.updateWorkingHours(this.startTime, this.endTime);
   }
 }

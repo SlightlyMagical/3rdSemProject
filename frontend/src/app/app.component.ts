@@ -16,8 +16,8 @@ export class AppComponent implements OnInit{
     if(token) {
       this.loggedIn = true;
       let decodedToken = jwtDecode(token) as Token;
-      if (decodedToken.usertype){
-        this.usertype = decodedToken.usertype;
+      if (decodedToken.role){
+        this.usertype = decodedToken.role;
         }
     }
   }
@@ -29,5 +29,5 @@ export class AppComponent implements OnInit{
 }
 
 class Token{
-  usertype?: string;
+  role?: string;
 }

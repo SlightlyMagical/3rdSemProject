@@ -2,10 +2,10 @@
   <mat-card>
     <h1>Your working hours</h1>
     <mat-form-field style="margin-right: 100px">
-      <input matInput type="time" placeholder="Start time" [value]="startTime">
+      <input matInput type="time" placeholder="Start time" [(ngModel)]="startTime">
     </mat-form-field>
     <mat-form-field style="margin-right: 100px">
-      <input matInput type="time" placeholder="End time" [value]="endTime">
+      <input matInput type="time" placeholder="End time" [(ngModel)]="endTime">
     </mat-form-field>
     <button
       mat-raised-button

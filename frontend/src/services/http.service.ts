@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import {AuthHelperService} from "./auth-helper.service";
 
 export const customAxios = axios.create({
-  baseURL: 'https://localhost:5000',
+  baseURL: 'http://localhost:5001',
   headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`
   }
@@ -13,7 +14,7 @@ export const customAxios = axios.create({
 })
 export class HttpService {
 
-  constructor() { }
+  constructor(private authHelper: AuthHelperService) { }
 
   async getCoaches() {
     const httpResponse = await customAxios.get('/home');
@@ -30,7 +31,12 @@ export class HttpService {
     return token.data;
   }
 
-  async updateWorkingHours(dto: {startTime: string; endTime: string}) {
-    await customAxios.put('/managebooking/coach', dto);
+  async updateWorkingHours(startTime: string, endTime: string) {
+  let dto = {
+    startTime: startTime,
+    endTime: endTime,
+    email: this.authHelper.getDecodedToken()?.email
+  }
+    await customAxios.put('/booking', dto);
   }
 }

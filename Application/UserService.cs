@@ -29,5 +29,10 @@ namespace Application
 
             return coaches; 
         }
+
+        public bool UpdateWorkingHours(WorkingHoursDTO dto)
+        {
+            return _userRepository.UpdateWorkingHours(dto);
+        }
     }
 }

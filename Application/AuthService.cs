@@ -42,7 +42,7 @@ namespace Application
             var key = Encoding.UTF8.GetBytes(AppSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("email", user.Email), new Claim("usertype", user.Usertype) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("email", user.Email), new Claim("role", user.Usertype) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
