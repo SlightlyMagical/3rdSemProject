@@ -39,6 +39,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CoachPolicy", (policy) => { policy.RequireRole("Coach"); });
+    options.AddPolicy("ClientPolicy", (policy) => { policy.RequireRole("Client"); });
+});
+
 builder.Services.AddCors();
 
 var app = builder.Build();
@@ -59,6 +65,8 @@ app.UseCors(options =>
 });
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
