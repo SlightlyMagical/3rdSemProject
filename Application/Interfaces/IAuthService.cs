@@ -10,6 +10,8 @@ namespace Application.Interfaces
 {
     public interface IAuthService
     {
-        User RegisterUser(PostUserDTO dto);
+        string Login(LoginDTO dto);
+        string RegisterUser(PostUserDTO dto);
+        string GenerateToken(User user);
     }
 }

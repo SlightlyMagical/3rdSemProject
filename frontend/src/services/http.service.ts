@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 
 export const customAxios = axios.create({
-  baseURL: 'https://localhost:5000'
+  baseURL: 'https://localhost:5000',
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  }
 })
 
 @Injectable({
@@ -17,8 +20,13 @@ export class HttpService {
     return httpResponse.data;
   }
 
-  async createNewUser(dto: {name: string; email: string; password: string; usertype: string}){
-    const httpResponse = await customAxios.post("/auth", dto);
-    return httpResponse.data;
+  async register(dto: {name: string; email: string; password: string; usertype: string}){
+    const token = await customAxios.post("/auth/register", dto);
+    return token.data;
+  }
+
+  async login(dto: { password: string; email: string }) {
+    const token = await customAxios.post("/auth/login", dto);
+    return token.data;
   }
 }

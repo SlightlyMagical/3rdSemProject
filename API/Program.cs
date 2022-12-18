@@ -1,9 +1,13 @@
 using Application;
+using Application.Helpers;
 using Application.Interfaces;
 using AutoMapper;
 using FluentValidation;
 using Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +27,23 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite(
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppSettings.Secret))
+    };
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CoachPolicy", (policy) => { policy.RequireRole("Coach"); });
+    options.AddPolicy("ClientPolicy", (policy) => { policy.RequireRole("Client"); });
+});
 
 builder.Services.AddCors();
 
@@ -44,6 +65,8 @@ app.UseCors(options =>
 });
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

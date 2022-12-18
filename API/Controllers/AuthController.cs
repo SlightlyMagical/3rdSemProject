@@ -19,20 +19,34 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<User> RegisterUser(PostUserDTO dto)
+        [Route("register")]
+        public ActionResult RegisterUser(PostUserDTO dto)
         {
             try
             {
-                var result = _authService.RegisterUser(dto);
-                return Created("", result);
+                return Ok(_authService.RegisterUser(dto));
             }
             catch (ValidationException v)
             {
                 return BadRequest(v.Message);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                return StatusCode(500, e.Message);
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public ActionResult Login(LoginDTO dto)
+        {
+            try
+            {
+                return Ok(_authService.Login(dto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
         }
     }
