@@ -14,8 +14,8 @@ export class CoachGuardService implements CanActivate{
     let token = localStorage.getItem('token');
     if (token){
       let decodedToken = jwtDecode(token) as Token;
-      if (decodedToken.usertype){
-        if (decodedToken.usertype == 'Coach'){
+      if (decodedToken.role){
+        if (decodedToken.role == 'Coach'){
           return true;
         }
       }
@@ -24,6 +24,6 @@ export class CoachGuardService implements CanActivate{
   }
 }
 class Token  {
-  usertype?: string;
+  role?: string;
 }
 
