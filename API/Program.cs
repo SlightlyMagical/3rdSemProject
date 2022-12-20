@@ -27,6 +27,7 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite(
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -64,7 +65,6 @@ app.UseCors(options =>
         .AllowCredentials();
 });
 
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 

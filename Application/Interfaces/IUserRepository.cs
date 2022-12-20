@@ -13,5 +13,6 @@ namespace Application.Interfaces
         User AddNewUser(User user);
         List<Coach> ReadAllCoaches();
         User ReadUserByEmail(string email);
+        bool UpdateWorkingHours(WorkingHoursDTO dto);
     }
 }
