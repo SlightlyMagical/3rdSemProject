@@ -16,6 +16,7 @@ import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import { LoginComponent } from './login/login.component';
 import { CoachBookingsComponent } from './coach-bookings/coach-bookings.component';
+import {CoachGuardService} from "../services/guards/coach-guard.service";
 
 const routes: Routes = [
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
     path: 'login', component: LoginComponent
   },
   {
-    path: 'manage-bookings', component: CoachBookingsComponent
+    path: 'manage-bookings', component: CoachBookingsComponent, canActivate: [CoachGuardService]
   }
 ]
 
