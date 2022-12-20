@@ -11,6 +11,7 @@ namespace Application.Interfaces
     public interface IUserService
     {
         List<Coach> GetAllCoaches();
+        void RebuildDB();
         bool UpdateWorkingHours(WorkingHoursDTO dto);
     }
 }

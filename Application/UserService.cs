@@ -30,6 +30,11 @@ namespace Application
             return coaches; 
         }
 
+        public void RebuildDB()
+        {
+            _userRepository.RebuildDB();
+        }
+
         public bool UpdateWorkingHours(WorkingHoursDTO dto)
         {
             return _userRepository.UpdateWorkingHours(dto);

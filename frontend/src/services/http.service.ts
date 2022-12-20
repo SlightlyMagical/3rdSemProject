@@ -3,7 +3,7 @@ import axios from 'axios';
 import {AuthHelperService} from "./auth-helper.service";
 
 export const customAxios = axios.create({
-  baseURL: 'http://localhost:5001',
+  baseURL: 'https://gamecoachingbackend.azurewebsites.net',
   headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`
   }

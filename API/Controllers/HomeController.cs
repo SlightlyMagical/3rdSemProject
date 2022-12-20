@@ -27,5 +27,11 @@ namespace API.Controllers
                 return StatusCode(500, e.ToString());
             }
         }
+        [HttpGet]
+        [Route("RebuildDB")]
+        public void RebuildDB()
+        {
+            _userService.RebuildDB();
+        }
     }
 }
