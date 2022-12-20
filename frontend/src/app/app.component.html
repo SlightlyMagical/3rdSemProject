@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+  <a mat-button
+     style="font-size: x-large"
+     routerLink="">
+    Game Coaching Today
+  </a>
+  <span class="example-spacer"></span>
+  <div *ngIf="!loggedIn">
+    <a mat-button routerLink="signup" >Sign up</a>
+    <a mat-button routerLink="login" >Log in</a>
+  </div>
+  <div *ngIf="loggedIn">
+    <a mat-button routerLink="manage-bookings" *ngIf="usertype == 'Coach' ">Manage bookings</a>
+    <a mat-button (click)="logout()" routerLink="" >Log out</a>
+  </div>
+</mat-toolbar>
+<router-outlet></router-outlet>

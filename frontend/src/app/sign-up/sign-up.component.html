@@ -1,0 +1,33 @@
+<div class="outer-container" >
+  <mat-button-toggle-group [(ngModel)]="usertype">
+    <mat-button-toggle value="Coach">Sign up as Coach</mat-button-toggle>
+    <mat-button-toggle value="Client">Sign up as Client</mat-button-toggle>
+  </mat-button-toggle-group>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="name">
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="email">
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput [(ngModel)]="password" [type]="hide ? 'password' : 'text'">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+  <br>
+  <button
+    [disabled]="usertype== '' || name=='' || email=='' || password==''"
+    mat-raised-button
+    color="primary"
+    (click)="signup()">
+    Sign up
+  </button>
+</div>
+

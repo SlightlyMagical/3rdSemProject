@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Application.DTOs;
+using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,9 @@ namespace Application.Interfaces
 {
     public interface IUserRepository
     {
+        User AddNewUser(User user);
+        List<Coach> ReadAllCoaches();
+        User ReadUserByEmail(string email);
+        bool UpdateWorkingHours(WorkingHoursDTO dto);
     }
 }
